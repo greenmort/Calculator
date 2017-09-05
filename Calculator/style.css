@@ -1,0 +1,38 @@
+﻿body {
+}
+
+#main {
+    margin: 20px auto;
+    padding: 15px 15px;
+    width: 350px;
+    height: 470px;
+    background-color: #ccc;
+    border: thin solid #aaa;
+}
+
+#tableu {
+    width: 320px;
+    height: 60px;
+    font-family: digital-7;
+    border: thin solid #aaa;
+    text-align: right;
+    font-size: 48px;
+    background-color: #eee;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+#keys {
+    margin: 80px 0 10px 5px;
+}
+
+.button {
+    width: 81px;
+    height: 60px;
+    font-family: Lato;
+    font-size: 24px;
+}
+
+#zero {
+    width: 165px;
+}
