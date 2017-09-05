@@ -22,6 +22,28 @@ function makeBuffer() {
         buffer = "";
     };
 
+    buffObj.pushNumber = function(num) {
+        numStack.push(num);
+        console.log(numStack);
+    }
+
+    buffObj.popNumber = function () {
+        return numStack.pop();
+    }
+
+    buffObj.pushOperation = function (oper) {
+        operStack.push(oper);
+        console.log(operStack);
+    }
+
+    buffObj.popOperation = function () {
+        return operStack.pop();
+    }
+
+    buffObj.calculate = function() {
+        
+    }
+
     return buffObj;
 };
 
@@ -51,7 +73,10 @@ function eventHolder(elem) {
 function operatorHolder(elem) {
     elem.addEventListener("click",
         function () {
-            
+            buffer.pushNumber(buffer.value());
+            buffer.pushOperation(elem.innerHTML);
+            buffer.clear();
+            buffer.hasPoint = false;
         });
 }
 
@@ -69,4 +94,11 @@ document.querySelector("#point").onclick = function () {
         buffer.hasPoint = true;
         document.querySelector("#tableu").innerHTML = buffer();
     }
+}
+
+document.querySelector("#equal").onclick = function () {
+    buffer.pushNumber(buffer.value());
+    buffer.clear();
+    buffer.hasPoint = false;
+    document.querySelector("#tableu").innerHTML = buffer.calculate();
 }
