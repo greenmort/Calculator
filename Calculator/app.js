@@ -5,7 +5,7 @@ function makeBuffer() {
     var numStack = [];
     var operStack = [];
 
-    var buffObj = function (str) {
+    var buffObj = function(str) {
         if (arguments.length === 0) return buffer;
         else {
             var v = new String(str);
@@ -18,7 +18,7 @@ function makeBuffer() {
         return +buffer;
     }
 
-    buffObj.clear = function () {
+    buffObj.clear = function() {
         buffer = "";
     };
 
@@ -27,29 +27,28 @@ function makeBuffer() {
         console.log(numStack);
     }
 
-    buffObj.popNumber = function () {
+    buffObj.popNumber = function() {
         return numStack.pop();
     }
 
-    buffObj.getLastNumber = function ()
-    {
+    buffObj.getLastNumber = function() {
         return numStack[numStack.length - 1];
     }
 
-    buffObj.pushOperation = function (oper) {
+    buffObj.pushOperation = function(oper) {
         operStack.push(oper);
         console.log(operStack);
     }
 
-    buffObj.popOperation = function () {
+    buffObj.popOperation = function() {
         return operStack.pop();
     }
 
-    buffObj.clearNumStack = function (){
+    buffObj.clearNumStack = function() {
         numStack = [];
     }
 
-    buffObj.clearOperStack = function () {
+    buffObj.clearOperStack = function() {
         operStack = [];
     }
 
@@ -62,53 +61,9 @@ function makeBuffer() {
 
     buffObj.calculate = function() {
         if (numStack.length === operStack.length) var lastOper = operStack.pop();
-        var members = [];
-        var operations = [];
-        while (numStack.length) {
-            var tempNum = numStack.pop();
-            if (operStack.length) var tempOper = operStack.pop();
-            else tempOper = null;
-            if (tempOper === "*" || tempOper === "/") {
-                switch (tempOper) {
-                    case "*":
-                        members.push(tempNum * numStack.pop());
-                        break;
-                    case "/":
-                        members.push(numStack.pop() / tempNum);
-                        break;
-                }
-                if (operStack.length) operations.push(operStack.pop());
-            } else {
-                members.push(tempNum);
-                if (tempOper) operations.push(tempOper);
-            }
-            console.log(numStack);
-            console.log(operStack);
-            console.log(members);
-            console.log(operations);
-        }
-        var total = members.pop();
-        if (members.length && operations.length) {
-            while (members.length) {
-                var tempMember = members.pop();
-                var tempOperation = operations.pop();
-                switch (tempOperation) {
-                case "+":
-                    total += tempMember;
-                    break;
-                case "-":
-                    total -= tempMember;
-                    break;
-                }
-            }
-        }
-        
-        if (lastOper) operStack = [lastOper];
-        numStack = [total];
-        return total;
-    }
 
-    return buffObj;
+        return buffObj;
+    };
 };
 
 var buffer = makeBuffer();
@@ -122,13 +77,13 @@ var operations = document.querySelectorAll(".operation");
 for (var i = 0; i < operations.length; i++) {
     operatorHolder(operations[i]);
 };
-  
+
 function eventHolder(elem) {
     elem.addEventListener("click",
         function () {
             if (elem.innerHTML === "0" && buffer.value() === 0) return;
             else if (buffer.value() === 0) document.querySelector("#tableu").innerHTML = "";
-            
+
             buffer(elem.innerHTML);
             document.querySelector("#tableu").innerHTML = buffer();
         });
@@ -140,11 +95,11 @@ function operatorHolder(elem) {
             buffer.pushNumber(buffer.value());
             buffer.pushOperation(elem.innerHTML);
             buffer.clear();
-            buffer.hasPoint = false;          
+            buffer.hasPoint = false;
         });
 }
 
-document.querySelector("#AC").onclick = function() {
+document.querySelector("#AC").onclick = function () {
     buffer.clear();
     buffer.clearNumStack();
     buffer.clearOperStack();
@@ -155,7 +110,7 @@ document.querySelector("#AC").onclick = function() {
 document.querySelector("#point").onclick = function () {
     if (buffer.hasPoint) return;
     else {
-        if (buffer.value() === 0) buffer ("0");
+        if (buffer.value() === 0) buffer("0");
         buffer(".");
         buffer.hasPoint = true;
         document.querySelector("#tableu").innerHTML = buffer();
@@ -171,5 +126,5 @@ document.querySelector("#equal").onclick = function () {
         buffer.clear();
         buffer.hasPoint = false;
         document.querySelector("#tableu").innerHTML = buffer.calculate();
-    } 
+    }
 }
