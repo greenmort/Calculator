@@ -61,9 +61,8 @@ function makeBuffer() {
 
     buffObj.calculate = function() {
         if (numStack.length === operStack.length) var lastOper = operStack.pop();
-
-        return buffObj;
-    };
+    }
+    return buffObj;
 };
 
 var buffer = makeBuffer();
