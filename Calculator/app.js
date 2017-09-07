@@ -61,6 +61,15 @@ function makeBuffer() {
 
     buffObj.calculate = function() {
         if (numStack.length === operStack.length) var lastOper = operStack.pop();
+        var total = 0;
+        var currNum = numStack.shift();
+        var currOper = operStack.shift();
+        while (numStack.length) {
+            if (currOper === "*") currNum *= numStack.shift();
+            if (currOper === "/") currNum /= numStack.shift();
+            currOper = operStack.shift();
+        }
+        return currNum;
     }
     return buffObj;
 };
@@ -124,6 +133,7 @@ document.querySelector("#equal").onclick = function () {
     if (buffer.StackLength().numStack > 1 && buffer.StackLength().operStack > 0) {
         buffer.clear();
         buffer.hasPoint = false;
-        document.querySelector("#tableu").innerHTML = buffer.calculate();
+        buffer(buffer.calculate());
+        document.querySelector("#tableu").innerHTML = buffer.value();
     }
 }
