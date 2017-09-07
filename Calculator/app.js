@@ -61,15 +61,36 @@ function makeBuffer() {
 
     buffObj.calculate = function() {
         if (numStack.length === operStack.length) var lastOper = operStack.pop();
-        var total = 0;
+        var accumulator = [];
+        var currSign = true;
         var currNum = numStack.shift();
         var currOper = operStack.shift();
         while (numStack.length) {
             if (currOper === "*") currNum *= numStack.shift();
             if (currOper === "/") currNum /= numStack.shift();
+            if (currOper === "+") {
+                (currSign) ? accumulator.push(currNum) : accumulator.push(-currNum);
+                currSign = true;
+                currNum = numStack.shift();
+            }
+            if (currOper === "-") {
+                (currSign) ? accumulator.push(currNum) : accumulator.push(-currNum);
+                currSign = false;
+                currNum = numStack.shift();
+            }
+
+            if (numStack.length === 0) { (currSign) ? accumulator.push(currNum) : accumulator.push(-currNum);} 
             currOper = operStack.shift();
         }
-        return currNum;
+
+        var total = accumulator.reduce(function (sum, current) {
+            return sum + current;
+        });
+
+        numStack.push(total);
+        if (lastOper) operStack.push(lastOper);
+
+        return total;
     }
     return buffObj;
 };
